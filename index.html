@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+        href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"
+        />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <title>Aplikasi Prediksi Kelulusan Mahasiswa Universitas Bumigora</title>
+    </head>
+    <body
+        class="
+            flex flex-col
+            justify-between
+            item-center
+            p-8
+            min-h-screen
+            bg-gradient-to-r
+            from-green-400
+            to-blue-500
+            text-gray-800
+            md:flex-row
+        "
+    >
+        <main class="bg-white p-16 rounded-lg">
+            <h1 class="text-3xl font-bold mb-8">
+                Prediksi Kelulusan Anda:
+            </h1>
+
+            <form
+                action="{{ url_for('predict') }}"
+                method="post"
+                class="flex flex-col"
+            >
+                
+                 <label for="Jenis Kelamin" class="mt-4 mb-2"
+                    >Jenis Kelamin:</label
+                >
+                <select
+                    name="JK"
+                    id="JK"
+                    class="p-4 bg-gray-100 rounded-md"
+                >
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                </select>
+                <label for="IPS1" class="mb-2">IP Semester 1</label>
+                <input
+                    type="number"
+                    name="IPS1"
+                    placeholder="IP Semester 1"
+                    required="required"
+                    class="p-4 bg-gray-100 rounded-md"
+                    min = "1"
+                    max = "4"
+					step="0.1"
+                /><br>
+				
+				<label for="IPS2" class="mb-2">IP Semester 2</label>
+                <input
+                    type="number"
+                    name="IPS2"
+                    placeholder="IP Semester 2"
+                    required="required"
+                    class="p-4 bg-gray-100 rounded-md"
+                    min = "1"
+                    max = "4"
+					step="0.1"
+                />
+				
+				<label for="IPS3" class="mb-2">IP Semester 3</label>
+                <input
+                    type="number"
+                    name="IPS3"
+                    placeholder="IP Semester 3"
+                    required="required"
+                    class="p-4 bg-gray-100 rounded-md"
+                    min = "1"
+                    max = "4"
+					step="0.1"
+                />
+				
+				<label for="IPS4" class="mb-2">IP Semester 4</label>
+                <input
+                    type="number"
+                    name="IPS4"
+                    placeholder="IP Semester 4"
+                    required="required"
+                    class="p-4 bg-gray-100 rounded-md"
+                    min = "1"
+                    max = "4"
+					step="0.1"
+                />
+				
+				<label for="IPS5" class="mb-2">IP Semester 5</label>
+                <input
+                    type="number"
+                    name="IPS5"
+                    placeholder="IP Semester 5"
+                    required="required"
+                    class="p-4 bg-gray-100 rounded-md"
+                    min = "1"
+                    max = "4"
+					step="0.1"
+                />
+			
+                <button
+                    type="submit"
+                    class="
+                        flex
+                        justify-center
+                        align-center
+                        mt-8
+                        p-4
+                        bg-gradient-to-r
+                        from-green-400
+                        to-blue-500
+                        text-white
+                        rounded-md
+                    "
+                >
+                    KLASIFIKASI SEKARANG
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-arrow-right ml-4"
+                    >
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </button>
+            </form>
+        </main>
+        <section class="mt-8 h-full flex-auto rounded-lg md:mt-0 md:ml-8">
+            <div class="bg-white p-16 rounded-lg">
+	 <h1 class="text-3xl font-bold mb-8" align='center'>
+                Data Prediksi Kelulusan Mahasiswa
+     </h1>
+    <table class="table">
+      <thead>
+      <tr>
+          <th>Jenis Kelamin</th>
+          <th>IPS 1</th>
+          <th>IPS 2</th>
+          <th>IPS 3</th>
+		  <th>IPS 4</th>
+		  <th>IPS 5</th>
+		  <th>Status</th>
+		  <th>Aksi</th>
+      </tr>
+      </thead>
+   
+          <tbody>
+            {% for row in list %}
+            <tr>
+               <td>{{ row.JK }}</td>
+               <td>{{ row.IPS1 }}</td>
+               <td>{{ row.IPS2 }}</td>
+               <td>{{ row.IPS3 }}</td>
+			   <td>{{ row.IPS4 }}</td>
+               <td>{{ row.IPS5 }}</td>
+			   <td>{{ row.status }}</td>
+			   <td><a href="http://localhost:5000/hapus/{{ row.JK}}" class="btn btn-danger" role="button">Hapus</a></td>
+             </tr>
+         {% endfor %}
+          </tbody>
+   </table>
+            </div>
+            <div class="flex justify-around bg-white p-16 rounded-lg mt-8">
+                
+            </div>
+        </section>
+    </body>
+</html>
